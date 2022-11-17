@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
+import Link from "next/link";
 
 interface IPokemon {
   name: string;
@@ -14,10 +15,10 @@ interface IApiResponse {
   previous: string | null;
 }
 
-function PokemonList() {
+export default function PokemonList() {
   const [data, setData] = useState<IApiResponse>();
   const [offset, setOffset] = useState(0);
-  const limit = useRef(50);
+  const limit = useRef(200);
 
   useEffect(() => {
     (async function () {
@@ -79,7 +80,7 @@ function PokemonList() {
               <td>{index + offset + 1}</td>
               <td>{pokemon.name}</td>
               <td>
-                <a href={pokemon.url}>Detail</a>
+                <Link href={`/${pokemon.name}`}>Detail</Link>
               </td>
             </tr>
           ))}
@@ -88,5 +89,3 @@ function PokemonList() {
     </div>
   );
 }
-
-export default PokemonList;
